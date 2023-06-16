@@ -56,18 +56,18 @@ npm install devlop
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {deprecate, equal, ok} from 'https://esm.sh/devlop@0'
+import {deprecate, equal, ok} from 'https://esm.sh/devlop@1'
 // For development code:
-// import {deprecate, equal, ok} from 'https://esm.sh/devlop@0?conditions=development'
+// import {deprecate, equal, ok} from 'https://esm.sh/devlop@1?conditions=development'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {deprecate, equal, ok} from 'https://esm.sh/devlop@0?bundle'
+  import {deprecate, equal, ok} from 'https://esm.sh/devlop@1?bundle'
   // For development code:
-  // import {deprecate, equal, ok} from 'https://esm.sh/devlop@0?bundle&conditions=development'
+  // import {deprecate, equal, ok} from 'https://esm.sh/devlop@1?bundle&conditions=development'
 </script>
 ```
 
