@@ -1,83 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import {deprecate, equal, ok} from 'devlop'
-
-test('ok', async function (t) {
-  await t.test('should fail on a false assertion', function () {
-    assert.throws(function () {
-      ok(false)
-    })
-  })
-
-  await t.test('should not fail on a true assertion', function () {
-    assert.doesNotThrow(function () {
-      ok(true)
-    })
-  })
-
-  await t.test('should use a default message if not given', function () {
-    try {
-      ok(false)
-      assert.fail()
-    } catch (error) {
-      const exception = /** @type {Error} */ (error)
-      assert.equal(exception.message, 'Expected value to be truthy')
-    }
-  })
-
-  await t.test('should use the given message (string)', function () {
-    try {
-      ok(false, 'xxx')
-      assert.fail()
-    } catch (error) {
-      const exception = /** @type {Error} */ (error)
-      assert.equal(exception.message, 'xxx')
-    }
-  })
-
-  await t.test('should use the given message (error)', function () {
-    try {
-      const error = new Error('xxx')
-      error.name = 'yyy'
-      ok(false, error)
-      assert.fail()
-    } catch (error) {
-      const exception = /** @type {Error} */ (error)
-      assert.equal(exception.message, 'xxx')
-      assert.equal(exception.name, 'yyy')
-    }
-  })
-
-  await t.test(
-    'should throw errors with `actual`, `code`, `expected`, `generated`, `name`, and `operator` fields',
-    function () {
-      try {
-        ok(false)
-        assert.fail()
-      } catch (error) {
-        const exception = /** @type {Error} */ (error)
-
-        assert.ok('actual' in exception)
-        assert.equal(exception.actual, false)
-
-        assert.ok('code' in exception)
-        assert.equal(exception.code, 'ERR_ASSERTION')
-
-        assert.ok('expected' in exception)
-        assert.equal(exception.expected, true)
-
-        assert.ok('generated' in exception)
-        assert.equal(exception.generated, true)
-
-        assert.ok('name' in exception)
-        assert.equal(exception.name, 'Assertion')
-
-        assert.ok('operator' in exception)
-        assert.equal(exception.operator, 'ok')
-      }
-    }
-  )
-})
+import {deprecate, equal, ok, unreachable} from 'devlop'
 
 test('equal', async function (t) {
   await t.test('should fail on a false assertion', function () {
@@ -191,6 +114,154 @@ test('deprecate', async function (t) {
 
       assert.equal(deprecatedCalls, 6)
       assert.equal(consoleErrorCalls, 1)
+    }
+  )
+})
+
+test('ok', async function (t) {
+  await t.test('should fail on a false assertion', function () {
+    assert.throws(function () {
+      ok(false)
+    })
+  })
+
+  await t.test('should not fail on a true assertion', function () {
+    assert.doesNotThrow(function () {
+      ok(true)
+    })
+  })
+
+  await t.test('should use a default message if not given', function () {
+    try {
+      ok(false)
+      assert.fail()
+    } catch (error) {
+      const exception = /** @type {Error} */ (error)
+      assert.equal(exception.message, 'Expected value to be truthy')
+    }
+  })
+
+  await t.test('should use the given message (string)', function () {
+    try {
+      ok(false, 'xxx')
+      assert.fail()
+    } catch (error) {
+      const exception = /** @type {Error} */ (error)
+      assert.equal(exception.message, 'xxx')
+    }
+  })
+
+  await t.test('should use the given message (error)', function () {
+    try {
+      const error = new Error('xxx')
+      error.name = 'yyy'
+      ok(false, error)
+      assert.fail()
+    } catch (error) {
+      const exception = /** @type {Error} */ (error)
+      assert.equal(exception.message, 'xxx')
+      assert.equal(exception.name, 'yyy')
+    }
+  })
+
+  await t.test(
+    'should throw errors with `actual`, `code`, `expected`, `generated`, `name`, and `operator` fields',
+    function () {
+      try {
+        ok(false)
+        assert.fail()
+      } catch (error) {
+        const exception = /** @type {Error} */ (error)
+
+        assert.ok('actual' in exception)
+        assert.equal(exception.actual, false)
+
+        assert.ok('code' in exception)
+        assert.equal(exception.code, 'ERR_ASSERTION')
+
+        assert.ok('expected' in exception)
+        assert.equal(exception.expected, true)
+
+        assert.ok('generated' in exception)
+        assert.equal(exception.generated, true)
+
+        assert.ok('name' in exception)
+        assert.equal(exception.name, 'Assertion')
+
+        assert.ok('operator' in exception)
+        assert.equal(exception.operator, 'ok')
+      }
+    }
+  )
+})
+
+test('unreachable', async function (t) {
+  await t.test('should fail', function () {
+    assert.throws(function () {
+      unreachable()
+    })
+  })
+
+  await t.test('should use a default message if not given', function () {
+    try {
+      unreachable()
+      assert.fail()
+    } catch (error) {
+      const exception = /** @type {Error} */ (error)
+      assert.equal(exception.message, 'Unreachable')
+    }
+  })
+
+  await t.test('should use the given message (string)', function () {
+    try {
+      unreachable('xxx')
+      assert.fail()
+    } catch (error) {
+      const exception = /** @type {Error} */ (error)
+      assert.equal(exception.message, 'xxx')
+    }
+  })
+
+  await t.test('should use the given message (error)', function () {
+    try {
+      const error = new Error('xxx')
+      error.name = 'yyy'
+      unreachable(error)
+      assert.fail()
+    } catch (error) {
+      const exception = /** @type {Error} */ (error)
+      assert.equal(exception.message, 'xxx')
+      assert.equal(exception.name, 'yyy')
+    }
+  })
+
+  await t.test(
+    'should throw errors with `actual`, `code`, `expected`, `generated`, `name`, and `operator` fields',
+    function () {
+      try {
+        unreachable()
+        assert.fail()
+      } catch (error) {
+        const exception = /** @type {Error} */ (error)
+
+        assert.ok('actual' in exception)
+        assert.equal(exception.actual, false)
+
+        assert.ok('code' in exception)
+        assert.equal(exception.code, 'ERR_ASSERTION')
+
+        assert.ok('expected' in exception)
+        assert.equal(exception.expected, true)
+
+        assert.ok('generated' in exception)
+        assert.equal(exception.generated, true)
+
+        assert.ok('name' in exception)
+        assert.equal(exception.name, 'Assertion')
+
+        assert.ok('operator' in exception)
+        assert.equal(exception.operator, 'ok')
+      }
     }
   )
 })

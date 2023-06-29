@@ -17,6 +17,7 @@ Some tools to make developing easier while not including code in production.
     *   [`deprecate(fn, message[, code])`](#deprecatefn-message-code)
     *   [`equal(actual, expected[, message])`](#equalactual-expected-message)
     *   [`ok(value[, message])`](#okvalue-message)
+    *   [`unreachable(message?)`](#unreachablemessage)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Security](#security)
@@ -56,7 +57,7 @@ npm install devlop
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {deprecate, equal, ok} from 'https://esm.sh/devlop@1'
+import {deprecate, equal, ok, unreachable} from 'https://esm.sh/devlop@1'
 // For development code:
 // import {deprecate, equal, ok} from 'https://esm.sh/devlop@1?conditions=development'
 ```
@@ -65,7 +66,7 @@ In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {deprecate, equal, ok} from 'https://esm.sh/devlop@1?bundle'
+  import {deprecate, equal, ok, unreachable} from 'https://esm.sh/devlop@1?bundle'
   // For development code:
   // import {deprecate, equal, ok} from 'https://esm.sh/devlop@1?bundle&conditions=development'
 </script>
@@ -169,7 +170,7 @@ Rollup doesn’t need the `/* #__PURE__ */` comment either!
 ## API
 
 This package exports the identifiers [`deprecate`][api-deprecate],
-[`equal`][api-equal], and [`ok`][api-ok].
+[`equal`][api-equal], [`ok`][api-ok], and [`unreachable`][api-unreachable].
 There is no default export.
 
 The export map supports the [`development` condition][node-condition].
@@ -237,10 +238,7 @@ Assert if `value` is truthy.
 
 *   `actual` (`unknown`)
     — value to assert
-*   `expected` (`unknown`)
-    — baseline
-*   `message` (`Error` or `string`, default: default: `'Expected value to be
-    truthy'`)
+*   `message` (`Error` or `string`, default: `'Expected value to be truthy'`)
     — message for assertion error
 
 ###### Returns
@@ -250,6 +248,26 @@ Nothing (`undefined`).
 ###### Throws
 
 Throws (`AssertionError`) when `value` is falsey.
+
+### `unreachable(message?)`
+
+Assert that a code path never happens.
+
+> 👉 **Important**: only asserts when the `development` condition is used,
+> does nothing in production.
+
+###### Parameters
+
+*   `message` (`Error` or `string`, default: `'Unreachable'`)
+    — message for assertion error
+
+###### Returns
+
+Never (`never`).
+
+###### Throws
+
+Throws (`AssertionError`), always.
 
 ## Types
 
@@ -338,3 +356,5 @@ See [How to Contribute to Open Source][contribute].
 [api-equal]: #equalactual-expected-message
 
 [api-ok]: #okvalue-message
+
+[api-unreachable]: #unreachablemessage
